@@ -45,7 +45,7 @@ class InfoFragment : Fragment() {
     private fun onRegisterToCpaasPressed(userId: String) {
         mainModel.onRegisterToCpaasPressed(userId, object : CPaaSAPICb {
             override fun onIncomingCall(call: ICall) {
-                //todo go to Call view
+                goToCallListener.goToCallView()
             }
 
             override fun onRegistrationComplete(success: Boolean) {
@@ -56,13 +56,13 @@ class InfoFragment : Fragment() {
 
     private fun onStartCallPressed(destId: String) {
         mainModel.onStartCallPressed(destId)
-        //todo go to Call view
+        goToCallListener.goToCallView()
     }
 
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        goToCallListener = context
+        goToCallListener = activity as GoToCallViewListener
     }
 
     companion object {

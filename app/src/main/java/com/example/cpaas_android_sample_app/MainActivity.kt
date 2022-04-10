@@ -11,10 +11,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), InfoFragment.GoToCallViewListener {
 
     private val MY_PERMISSIONS_RECORD_AUDIO = 1
-    private lateinit var binding: ActivityMainBinding
     private lateinit var mainModel: MainViewModel
     private val CALL_FRAGMENT_TAG = "CALL_FRAGMENT"
     private val INFO_FRAGMENT_TAG = "INFO_FRAGMENT"
@@ -40,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun goToCallFragment() {
+    override fun goToCallView() {
         var fragment = CallFragment.newInstance()
 
         val manager: FragmentManager = supportFragmentManager
