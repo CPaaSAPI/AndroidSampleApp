@@ -12,8 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.cpaasapi.sdk.api.ICallEvents
 import com.cpaasapi.sdk.api.Reason
 
+/**
+ * This Fragment is responsible for the view during an active call
+ */
 class CallFragment : Fragment() {
-    private lateinit var mainModel: MainViewModel
+    private lateinit var cPaaSModel: CPaaSViewModel
     var isMicEnable = true // because webrtc track  mute = !enable. keep it by track
     var callStatus: TextView? = null
     var callProgressBar: ProgressBar? = null
@@ -43,17 +46,17 @@ class CallFragment : Fragment() {
                 image = R.drawable.ic_mic_unmute
             }
             (it as ImageView).setImageDrawable(view.context.getDrawable(image))
-            mainModel.onMutePressed(isMicEnable)
+            cPaaSModel.onMutePressed(isMicEnable)
         }
         view.findViewById<ImageView>(R.id.end_btn).setOnClickListener {
-            mainModel.onEndPressed()
+            cPaaSModel.onEndPressed()
         }
     }
 
     private fun registerViewModel() {
-        mainModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        cPaaSModel = ViewModelProvider(requireActivity()).get(CPaaSViewModel::class.java)
         // Listen to call event so we can update UI accordingly
-        mainModel.startCallEventListener(object: ICallEvents {
+        cPaaSModel.startCallEventListener(object: ICallEvents {
             override fun onConnected() {
                 activity?.runOnUiThread {
                     callProgressBar?.visibility = View.GONE

@@ -8,7 +8,10 @@ import com.cpaasapi.sdk.data.CPaaSAPISettings
 import com.cpaasapi.sdk.data.CallOptions
 import com.cpaasapi.sdk.utils.Const
 
-class MainViewModel(private val app: Application) : AndroidViewModel(app) {
+/**
+ * A View Model that amalgamates all CPaaS API calls
+ */
+class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
     val message = MutableLiveData<String>()
     var currentCall: ICall? = null
 

@@ -15,10 +15,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.cpaasapi.sdk.api.CPaaSAPICb
 import com.cpaasapi.sdk.api.ICall
 
+/**
+ * Main Activity gave as sample code for using CPaaS API in order to establish a voice call
+ * The main activity UI contains a panel that allows the user to make such a call.
+ */
 class MainActivity : AppCompatActivity() {
 
     private val MY_PERMISSIONS_RECORD_AUDIO = 1
-    private lateinit var mainModel: MainViewModel
+    private lateinit var cPaaSModel: CPaaSViewModel
     private val CALL_FRAGMENT_TAG = "CALL_FRAGMENT"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onRegisterToCpaasPressed(userId: String) {
-        mainModel.onRegisterToCpaasPressed(userId, object : CPaaSAPICb {
+        cPaaSModel.onRegisterToCpaasPressed(userId, object : CPaaSAPICb {
             override fun onIncomingCall(call: ICall) {
                 goToCallView()
             }
@@ -55,14 +59,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onStartCallPressed(destId: String) {
-        mainModel.onStartCallPressed(destId)
+        cPaaSModel.onStartCallPressed(destId)
         goToCallView()
     }
 
     private fun registerViewModel() {
         // main model sends message and we show it on screen
-        mainModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        mainModel.message.observe(this) {
+        cPaaSModel = ViewModelProvider(this).get(CPaaSViewModel::class.java)
+        cPaaSModel.message.observe(this) {
             runOnUiThread {
                 Toast.makeText(applicationContext, it, Toast.LENGTH_LONG).show()
             }
