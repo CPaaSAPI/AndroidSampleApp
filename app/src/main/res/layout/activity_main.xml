@@ -37,7 +37,7 @@
             <EditText
                 android:id="@+id/et_userid"
                 style="@style/modifiedEditText"
-                android:hint="User Id"
+                android:hint="@string/user_id"
                 android:inputType="textEmailAddress"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -49,7 +49,7 @@
             <EditText
                 android:id="@+id/et_destId"
                 style="@style/modifiedEditText"
-                android:hint="destination Id"
+                android:hint="@string/destination_id"
                 android:inputType="textEmailAddress"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -57,14 +57,14 @@
         <Button
             android:id="@+id/btn_register"
             style="@style/RegisterButton"
-            android:text="Register"
+            android:text="@string/register"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"/>
 
         <Button
             android:id="@+id/btn_call"
             style="@style/RegisterButton"
-            android:text="START CALL"
+            android:text="@string/start_call"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"/>
 

@@ -10,6 +10,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.cpaasapi.sdk.api.ICallEvents
+import com.cpaasapi.sdk.api.Reason
 
 class CallFragment : Fragment() {
     private lateinit var mainModel: MainViewModel
@@ -46,21 +47,29 @@ class CallFragment : Fragment() {
         }
         view.findViewById<ImageView>(R.id.end_btn).setOnClickListener {
             mainModel.onEndPressed()
-            requireActivity().onBackPressed()
         }
     }
 
     private fun registerViewModel() {
-        // model should be registered
-        // main model can send call events to activity.
-        mainModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        mainModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        // Listen to call event so we can update UI accordingly
         mainModel.startCallEventListener(object: ICallEvents {
             override fun onConnected() {
-                callProgressBar?.visibility = View.GONE
-                callStatus?.text = "Connected"
+                activity?.runOnUiThread {
+                    callProgressBar?.visibility = View.GONE
+                    callStatus?.text = getString(R.string.connected)
+                }
             }
             override fun onRinging() {
-                callStatus?.text = "Ringing"
+                activity?.runOnUiThread {
+                    callStatus?.text = getString(R.string.ringing)
+                }
+            }
+
+            override fun onCallEnd(reason: Reason?) {
+                activity?.runOnUiThread {
+                    activity!!.onBackPressed()
+                }
             }
         })
     }

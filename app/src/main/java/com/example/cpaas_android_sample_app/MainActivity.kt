@@ -4,10 +4,8 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -92,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                     Manifest.permission.RECORD_AUDIO
                 )
             ) {
-                Toast.makeText(this, "Please grant permissions to record audio", Toast.LENGTH_LONG)
+                Toast.makeText(this, getString(R.string.permission_msg), Toast.LENGTH_LONG)
                     .show()
 
                 //Give user option to still opt-in the permissions

@@ -14,25 +14,29 @@ class MainViewModel(private val app: Application) : AndroidViewModel(app) {
 
     fun onRegisterToCpaasPressed(userId: String, cPaaSAPICb: CPaaSAPICb) {
         val settings = CPaaSAPISettings("usstaging.restcomm.com","sid","token","555343456", userId,"PNSTOKEN", Const.WS_URL_AWS)
+        // API initialization, must be called first and once in order to use this API.
+        // MavSettings - setting object contains preparations regarding this SDK.
         CPaaSAPI.register(settings, app.applicationContext, object:
             CPaaSAPICb {
             override fun onIncomingCall(call: ICall) {
-                //accept call immediately
-                //(maybe you would like to add here UI dialog with accept / reject).
+                // Here we accept the call immediately
+                // (maybe you would like to add here UI dialog with accept / reject).
                 currentCall = call
                 currentCall!!.joinCall()
-                message.postValue("GOT CALL")
 
+                message.postValue("GOT CALL")
                 cPaaSAPICb.onIncomingCall(call)
             }
 
             override fun onRegistrationComplete(success: Boolean) {
+                // API initialization was completed successfully
                 message.postValue("RegistrationComplete: $success")
             }
         })
     }
 
     fun onStartCallPressed(destId: String) {
+        // Start a call to destId. creates and returns a new call object that represents this call.
         currentCall = CPaaSAPI.startCall(
             destinationId = destId,
             callOptions = CallOptions(audio = true)
@@ -40,6 +44,7 @@ class MainViewModel(private val app: Application) : AndroidViewModel(app) {
     }
 
     fun startCallEventListener(listener: ICallEvents) {
+        // Listen to Call events
         currentCall?.eventListener = object: ICallEvents {
             override fun onConnected() {
                 listener.onConnected()
@@ -55,12 +60,12 @@ class MainViewModel(private val app: Application) : AndroidViewModel(app) {
             }
 
             override fun onCallEnd(reason: Reason?) {
-                message.postValue(reason?.toString() ?: "Call ended")
+                message.postValue(reason?.toString() ?: "CALL ENDED")
                 listener.onCallEnd(reason)
             }
 
             override fun onReconnecting(reason: Reason) {
-                //not working yet
+                listener.onReconnecting(reason)
             }
         }
     }
