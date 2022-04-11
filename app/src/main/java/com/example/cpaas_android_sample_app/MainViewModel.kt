@@ -1,14 +1,8 @@
 package com.example.cpaas_android_sample_app
 
 import android.app.Application
-import android.content.Context
-import android.util.Log
-import android.widget.Toast
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.cpaasapi.sdk.api.*
 import com.cpaasapi.sdk.data.CPaaSAPISettings
 import com.cpaasapi.sdk.data.CallOptions
@@ -43,10 +37,8 @@ class MainViewModel(private val app: Application) : AndroidViewModel(app) {
             destinationId = destId,
             callOptions = CallOptions(audio = true)
         )
-        //todo goToCall
     }
 
-    //todo portrait
     fun startCallEventListener(listener: ICallEvents) {
         currentCall?.eventListener = object: ICallEvents {
             override fun onConnected() {

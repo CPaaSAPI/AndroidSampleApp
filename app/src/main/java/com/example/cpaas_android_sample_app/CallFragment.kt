@@ -8,12 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.cpaasapi.sdk.api.ICallEvents
-import com.cpaasapi.sdk.api.Reason
 
 class CallFragment : Fragment() {
     private lateinit var mainModel: MainViewModel
