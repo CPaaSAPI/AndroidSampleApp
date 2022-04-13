@@ -9,7 +9,8 @@ import com.cpaasapi.sdk.data.CallOptions
 import com.cpaasapi.sdk.utils.Const
 
 /**
- * A View Model that amalgamates all CPaaS API calls
+ * A View Model that demonstrate the usage of CPaaS API calls
+ * (such as CPaaSAPI.register(), CPaaSAPI.startCall(), call.eventListener, etc...)
  */
 class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
     val message = MutableLiveData<String>()
