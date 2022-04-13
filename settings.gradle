@@ -10,6 +10,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        jcenter()
     }
 }
 rootProject.name = "cpaas-android-sample-app"
