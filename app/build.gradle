@@ -37,16 +37,19 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
     // when we will use sdk from repository we should check if all dependencies needed!
     implementation fileTree(dir: "libs", include: ["*.aar"])
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
     implementation("org.webrtc:google-webrtc:1.0.32006")
     implementation("io.ktor:ktor-client-okhttp:1.6.5")
+    implementation("io.ktor:ktor-client-okhttp:1.6.8")
+    implementation("io.ktor:ktor-client-json:1.6.8")
+    implementation("io.ktor:ktor-client-serialization:1.6.8")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
 }
 
@@ -55,7 +58,7 @@ dependencies {
 // change include when aar name changed
 task copyAAR(type: Copy) {
     from("$projectDir/../../kmmclientsdk/shared/build/outputs/aar")
-    include('shared-debug.aar')
+    include('cpaasapi-debug.aar')
     into("$projectDir/libs/")
 }
 

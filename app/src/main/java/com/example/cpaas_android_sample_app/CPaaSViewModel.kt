@@ -1,6 +1,7 @@
 package com.example.cpaas_android_sample_app
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.cpaasapi.sdk.api.*
@@ -16,8 +17,10 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
     val message = MutableLiveData<String>()
     var currentCall: ICall? = null
 
-    fun onRegisterToCpaasPressed(userId: String, cPaaSAPICb: CPaaSAPICb) {
-        val settings = CPaaSAPISettings("usstaging.restcomm.com","sid","token","555343456", userId,"PNSTOKEN", Const.WS_URL_AWS)
+    fun onRegisterToCpaasPressed(cPaaSAPICb: CPaaSAPICb) {
+        val settings = CPaaSAPISettings("webrtc-dev.restcomm.com","sid","token","ClickToCallDevApp", "YOUR_USER_ID","PNSTOKEN", Const.WS_URL_AWS)
+        Log.d("CPAASAPI dudu", "$settings")
+
         // API initialization, must be called first and once in order to use this API.
         // MavSettings - setting object contains preparations regarding this SDK.
         CPaaSAPI.register(settings, app.applicationContext, object:
