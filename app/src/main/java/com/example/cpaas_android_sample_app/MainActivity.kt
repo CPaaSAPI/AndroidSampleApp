@@ -37,17 +37,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun setView() {
         findViewById<Button>(R.id.btn_register).setOnClickListener {
-            val userId = findViewById<EditText>(R.id.et_userid).text.toString()
-            onRegisterToCpaasPressed(userId)
+            onRegisterToCpaasPressed()
         }
         findViewById<Button>(R.id.btn_call).setOnClickListener {
-            val destId = findViewById<EditText>(R.id.et_destId).text.toString()
-            onStartCallPressed(destId)
+            onStartCallPressed()
         }
     }
 
-    private fun onRegisterToCpaasPressed(userId: String) {
-        cPaaSModel.onRegisterToCpaasPressed(userId, object : CPaaSAPICb {
+    private fun onRegisterToCpaasPressed() {
+        cPaaSModel.onRegisterToCpaasPressed(object : CPaaSAPICb {
             override fun onIncomingCall(call: ICall) {
                 goToCallView()
             }
@@ -58,8 +56,8 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun onStartCallPressed(destId: String) {
-        cPaaSModel.onStartCallPressed(destId)
+    private fun onStartCallPressed() {
+        cPaaSModel.onStartCallPressed("DESTINATION_ID")
         goToCallView()
     }
 
