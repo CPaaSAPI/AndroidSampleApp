@@ -19,7 +19,7 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
 
     fun onRegisterToCpaasPressed(cPaaSAPICb: CPaaSAPICb) {
         val settings = CPaaSAPISettings("webrtc-dev.restcomm.com","sid","token","ClickToCallDevApp", "YOUR_USER_ID","PNSTOKEN", Const.WS_URL_AWS)
-        Log.d("CPAASAPI dudu", "$settings")
+        Log.d("CPAASAPI", "$settings")
 
         // API initialization, must be called first and once in order to use this API.
         // MavSettings - setting object contains preparations regarding this SDK.
