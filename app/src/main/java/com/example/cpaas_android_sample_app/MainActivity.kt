@@ -22,7 +22,7 @@ import com.cpaasapi.sdk.data.ServiceType
  */
 class MainActivity : AppCompatActivity() {
 
-    private val MY_PERMISSIONS_RECORD_AUDIO = 1
+    private val RECORD_AUDIO_PERMISSION_REQUEST_CODE = 1
     private lateinit var cPaaSModel: CPaaSViewModel
     private val CALL_FRAGMENT_TAG = "CALL_FRAGMENT"
 
@@ -34,6 +34,16 @@ class MainActivity : AppCompatActivity() {
 
         registerViewModel()
         setView()
+    }
+
+    private fun registerViewModel() {
+        // main model sends message and we show it on screen
+        cPaaSModel = ViewModelProvider(this).get(CPaaSViewModel::class.java)
+        cPaaSModel.message.observe(this) { msg ->
+            runOnUiThread {
+                Toast.makeText(applicationContext, msg, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun setView() {
@@ -66,16 +76,6 @@ class MainActivity : AppCompatActivity() {
         goToCallView()
     }
 
-    private fun registerViewModel() {
-        // main model sends message and we show it on screen
-        cPaaSModel = ViewModelProvider(this).get(CPaaSViewModel::class.java)
-        cPaaSModel.message.observe(this) {
-            runOnUiThread {
-                Toast.makeText(applicationContext, it, Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
     fun goToCallView() {
         var fragment = CallFragment.newInstance()
 
@@ -104,14 +104,14 @@ class MainActivity : AppCompatActivity() {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.RECORD_AUDIO),
-                    MY_PERMISSIONS_RECORD_AUDIO
+                    RECORD_AUDIO_PERMISSION_REQUEST_CODE
                 )
             } else {
                 // Show user dialog to grant permission to record audio
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.RECORD_AUDIO),
-                    MY_PERMISSIONS_RECORD_AUDIO
+                    RECORD_AUDIO_PERMISSION_REQUEST_CODE
                 )
             }
         }

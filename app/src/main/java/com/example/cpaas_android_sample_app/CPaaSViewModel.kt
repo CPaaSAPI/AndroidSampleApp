@@ -20,11 +20,18 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
     var currentCall: ICall? = null
 
     // TODO!!! Remove it before publishing
-    private val COGNITO_USERNAME = "AC3c5b4177e5fdd813720bc0d6dd7f057e"
-    private val COGNITO_PASSWORD = "c8b0fca2c59d9198b641ce60fe9b501b"
+    private val ACCOUNT_SID = "<Account SID from restcomm>"
+    private val AUTH_TOKEN = "<Auth Token from restcomm>"
 
     fun onRegisterToCpaasPressed(cPaaSAPICb: CPaaSAPICb) {
-        val settings = CPaaSAPISettings("webrtc-dev.restcomm.com",COGNITO_USERNAME,COGNITO_PASSWORD,"ClickToCallDevApp", "YOUR_USER_ID","PNSTOKEN", Const.HTTP_URL_AWS)
+        val settings = CPaaSAPISettings(
+            customDomain = "webrtc-dev.restcomm.com",
+            accountSid = ACCOUNT_SID,
+            accountToken = AUTH_TOKEN,
+            appSid = "ClickToCallDevApp",
+            clientId = "YOUR_USER_ID",
+            PNSToken = "PNSTOKEN",
+            BaseURL = Const.HTTP_URL_AWS)
         Log.d("CPAASAPI", "$settings")
 
         // API initialization, must be called first and once in order to use this API.
