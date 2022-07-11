@@ -19,7 +19,8 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
     val message = MutableLiveData<String>()
     var currentCall: ICall? = null
 
-    // TODO!!! Remove it before publishing
+    // To get ACCOUNT_SID & AUTH_TOKEN please visit this link:
+    // https://usstaging.restcomm.com/docs/api/overview.html#_authentication
     private val ACCOUNT_SID = "<Account SID from restcomm>"
     private val AUTH_TOKEN = "<Auth Token from restcomm>"
 
