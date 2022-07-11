@@ -17,7 +17,7 @@ import com.cpaasapi.sdk.api.Reason
  */
 class CallFragment : Fragment() {
     private lateinit var cPaaSModel: CPaaSViewModel
-    var isMicEnable = true // because webrtc track mute = !enable. keep it by track
+    var mute = false
     var callStatus: TextView? = null
     var callProgressBar: ProgressBar? = null
 
@@ -64,14 +64,15 @@ class CallFragment : Fragment() {
         callProgressBar = view.findViewById(R.id.call_progress)
 
         view.findViewById<ImageView>(R.id.mute_btn).setOnClickListener {
-            isMicEnable = !isMicEnable
+            mute = !mute
             var image = R.drawable.ic_mic
-            if (!isMicEnable) {
+            if (mute) {
                 image = R.drawable.ic_mic_unmute
             }
             (it as ImageView).setImageDrawable(view.context.getDrawable(image))
-            cPaaSModel.onMutePressed(isMicEnable)
+            cPaaSModel.onMutePressed(mute)
         }
+
         view.findViewById<ImageView>(R.id.end_btn).setOnClickListener {
             cPaaSModel.onEndPressed()
         }
