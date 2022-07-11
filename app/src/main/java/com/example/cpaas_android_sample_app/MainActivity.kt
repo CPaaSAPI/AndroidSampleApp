@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.cpaasapi.sdk.api.CPaaSAPICb
 import com.cpaasapi.sdk.api.ICall
+import com.cpaasapi.sdk.data.ServiceType
 
 /**
  * Main Activity gave as sample code for using CPaaS API in order to establish a voice call
@@ -46,7 +47,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun onRegisterToCpaasPressed() {
         cPaaSModel.onRegisterToCpaasPressed(object : CPaaSAPICb {
-            override fun onIncomingCall(call: ICall) {
+            override fun onIncomingCall(
+                callId: String,
+                callerId: String,
+                serviceType: ServiceType
+            ) {
                 goToCallView()
             }
 
