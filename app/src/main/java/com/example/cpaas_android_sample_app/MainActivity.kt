@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.cpaasapi.sdk.api.CPaaSAPICb
 import com.cpaasapi.sdk.api.ICall
+import com.cpaasapi.sdk.data.ServiceType
 
 /**
  * Main Activity gave as sample code for using CPaaS API in order to establish a voice call
@@ -21,7 +22,7 @@ import com.cpaasapi.sdk.api.ICall
  */
 class MainActivity : AppCompatActivity() {
 
-    private val MY_PERMISSIONS_RECORD_AUDIO = 1
+    private val RECORD_AUDIO_PERMISSION_REQUEST_CODE = 1
     private lateinit var cPaaSModel: CPaaSViewModel
     private val CALL_FRAGMENT_TAG = "CALL_FRAGMENT"
 
@@ -35,18 +36,32 @@ class MainActivity : AppCompatActivity() {
         setView()
     }
 
+    private fun registerViewModel() {
+        // main model sends message and we show it on screen
+        cPaaSModel = ViewModelProvider(this).get(CPaaSViewModel::class.java)
+        cPaaSModel.message.observe(this) { msg ->
+            runOnUiThread {
+                Toast.makeText(applicationContext, msg, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
     private fun setView() {
         findViewById<Button>(R.id.btn_register).setOnClickListener {
-            onRegisterToCpaasPressed()
+            onRegisterToCpaaSPressed()
         }
         findViewById<Button>(R.id.btn_call).setOnClickListener {
             onStartCallPressed()
         }
     }
 
-    private fun onRegisterToCpaasPressed() {
-        cPaaSModel.onRegisterToCpaasPressed(object : CPaaSAPICb {
-            override fun onIncomingCall(call: ICall) {
+    private fun onRegisterToCpaaSPressed() {
+        cPaaSModel.onRegisterToCpaasPressed(object: CPaaSAPICb {
+            override fun onIncomingCall(
+                callId: String,
+                callerId: String,
+                serviceType: ServiceType
+            ) {
                 goToCallView()
             }
 
@@ -57,18 +72,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onStartCallPressed() {
-        cPaaSModel.onStartCallPressed("DESTINATION_ID")
+        cPaaSModel.onStartCallPressed()
         goToCallView()
-    }
-
-    private fun registerViewModel() {
-        // main model sends message and we show it on screen
-        cPaaSModel = ViewModelProvider(this).get(CPaaSViewModel::class.java)
-        cPaaSModel.message.observe(this) {
-            runOnUiThread {
-                Toast.makeText(applicationContext, it, Toast.LENGTH_LONG).show()
-            }
-        }
     }
 
     fun goToCallView() {
@@ -99,14 +104,14 @@ class MainActivity : AppCompatActivity() {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.RECORD_AUDIO),
-                    MY_PERMISSIONS_RECORD_AUDIO
+                    RECORD_AUDIO_PERMISSION_REQUEST_CODE
                 )
             } else {
                 // Show user dialog to grant permission to record audio
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.RECORD_AUDIO),
-                    MY_PERMISSIONS_RECORD_AUDIO
+                    RECORD_AUDIO_PERMISSION_REQUEST_CODE
                 )
             }
         }

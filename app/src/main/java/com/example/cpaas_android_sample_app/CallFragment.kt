@@ -17,7 +17,7 @@ import com.cpaasapi.sdk.api.Reason
  */
 class CallFragment : Fragment() {
     private lateinit var cPaaSModel: CPaaSViewModel
-    var isMicEnable = true // because webrtc track  mute = !enable. keep it by track
+    var mute = false
     var callStatus: TextView? = null
     var callProgressBar: ProgressBar? = null
 
@@ -31,26 +31,8 @@ class CallFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setView(view)
         registerViewModel()
-    }
-
-    private fun setView(view: View) {
-        callStatus = view.findViewById(R.id.call_status)
-        callProgressBar = view.findViewById(R.id.call_progress)
-
-        view.findViewById<ImageView>(R.id.mute_btn).setOnClickListener {
-            isMicEnable = !isMicEnable
-            var image = R.drawable.ic_mic
-            if (!isMicEnable) {
-                image = R.drawable.ic_mic_unmute
-            }
-            (it as ImageView).setImageDrawable(view.context.getDrawable(image))
-            cPaaSModel.onMutePressed(isMicEnable)
-        }
-        view.findViewById<ImageView>(R.id.end_btn).setOnClickListener {
-            cPaaSModel.onEndPressed()
-        }
+        setView(view)
     }
 
     private fun registerViewModel() {
@@ -77,8 +59,32 @@ class CallFragment : Fragment() {
         })
     }
 
+    private fun setView(view: View) {
+        // Call status TextView will show statuses such as 'connecting', 'ringing', 'connected'
+        callStatus = view.findViewById(R.id.call_status)
+        // Call progress bar showed until initializing the call
+        callProgressBar = view.findViewById(R.id.call_progress)
+
+        // Mute/UnMute button enable/disable microphone on local side
+        view.findViewById<ImageView>(R.id.mute_btn).setOnClickListener {
+            mute = !mute
+            var image = R.drawable.ic_mic
+            if (mute) {
+                image = R.drawable.ic_mic_unmute
+            }
+            (it as ImageView).setImageDrawable(view.context.getDrawable(image))
+            cPaaSModel.onMutePressed(mute)
+        }
+
+        // End call button will end call & close call fragment
+        view.findViewById<ImageView>(R.id.end_btn).setOnClickListener {
+            cPaaSModel.onEndPressed()
+        }
+    }
+
     companion object {
         @JvmStatic
         fun newInstance() = CallFragment()
     }
+
 }
