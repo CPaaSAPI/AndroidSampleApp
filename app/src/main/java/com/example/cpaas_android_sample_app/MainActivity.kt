@@ -48,15 +48,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun setView() {
         findViewById<Button>(R.id.btn_register).setOnClickListener {
-            onRegisterToCpaasPressed()
+            onRegisterToCpaaSPressed()
         }
         findViewById<Button>(R.id.btn_call).setOnClickListener {
             onStartCallPressed()
         }
     }
 
-    private fun onRegisterToCpaasPressed() {
-        cPaaSModel.onRegisterToCpaasPressed(object : CPaaSAPICb {
+    private fun onRegisterToCpaaSPressed() {
+        cPaaSModel.onRegisterToCpaasPressed(object: CPaaSAPICb {
             override fun onIncomingCall(
                 callId: String,
                 callerId: String,

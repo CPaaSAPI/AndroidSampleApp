@@ -6,7 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.cpaasapi.sdk.api.*
 import com.cpaasapi.sdk.data.CPaaSAPISettings
-import com.cpaasapi.sdk.data.CallOptionService
 import com.cpaasapi.sdk.data.CallOptions
 import com.cpaasapi.sdk.data.ServiceType
 import com.cpaasapi.sdk.utils.Const
@@ -24,7 +23,7 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
     private val ACCOUNT_SID = "<Account SID from restcomm>"
     private val AUTH_TOKEN = "<Auth Token from restcomm>"
 
-    fun onRegisterToCpaasPressed(cPaaSAPICb: CPaaSAPICb) {
+    fun onRegisterToCpaasPressed(callback: CPaaSAPICb) {
         val settings = CPaaSAPISettings(
             customDomain = "webrtc-dev.restcomm.com",
             accountSid = ACCOUNT_SID,
@@ -40,25 +39,7 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
         CPaaSAPI.register(settings, app.applicationContext, object: CPaaSAPICb {
             override fun onIncomingCall(callId: String, callerId: String, serviceType: ServiceType) {
                 // Got call from callerId
-                val api = if (serviceType == ServiceType.VOICE) {
-                    CPaaSAPI.voice
-                } else {
-                    // feature use CPaaSAPI.video
-                    CPaaSAPI.voice
-                }
-                api.connect(callId, CallOptions(audio = true)) { result ->
-                    result.onSuccess { ICall ->
-                        currentCall = ICall
-
-                        message.postValue("GOT CALL")
-                        cPaaSAPICb.onIncomingCall(callId = callId, callerId = callerId, serviceType = serviceType)
-                    }
-
-                    result.onFailure { error ->
-                        // handle connection error
-                        message.postValue("Failed connect call ${error.message}")
-                    }
-                }
+                handleIncomingCall(callId, callerId, serviceType, callback)
             }
 
             override fun onRegistrationComplete(success: Boolean) {
@@ -66,6 +47,35 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
                 message.postValue("RegistrationComplete: $success")
             }
         })
+    }
+
+    fun handleIncomingCall(
+        callId: String,
+        callerId: String,
+        serviceType: ServiceType,
+        callback: CPaaSAPICb
+    ) {
+        val api = if (serviceType == ServiceType.VOICE) {
+            CPaaSAPI.voice
+        } else {
+            // feature use CPaaSAPI.video
+            CPaaSAPI.voice
+        }
+        api.connect(callId, CallOptions(audio = true)) { result ->
+            // Call accepted immediately
+            // (You can add here UI dialog with accept / reject).
+            result.onSuccess { ICall ->
+                currentCall = ICall
+
+                message.postValue("GOT CALL")
+                callback.onIncomingCall(callId = callId, callerId = callerId, serviceType = serviceType)
+            }
+
+            result.onFailure { error ->
+                // handle connection error
+                message.postValue("Failed connect call ${error.message}")
+            }
+        }
     }
 
     fun onStartCallPressed() {
@@ -99,24 +109,47 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
     fun startCallEventListener(listener: ICallEvents) {
         // Listen to Call events
         currentCall?.eventListener = object: ICallEvents {
+            /**
+             * The call was successfully connected,
+             * or the process of reconnecting was completed successfully.
+             */
             override fun onConnected() {
                 listener.onConnected()
             }
 
+            /**
+             * Outgoing call is ringing on required destination.
+             */
             override fun onRinging() {
                 listener.onRinging()
             }
 
+            /**
+             * The call failed to connect.
+             * Will provide {@link Reason} for more information about what failure occurred.
+             */
             override fun onConnectedFailure(reason: Reason) {
                 message.postValue(reason.toString())
                 listener.onConnectedFailure(reason)
             }
 
+            /**
+             * The call was ended.
+             * Can happen for the following reasons:
+             ** caller or callee calls 'endCall()' on the 'Call' object
+             ** error occurs on the client or the server that terminates the call
+             *
+             * If the call ends normally `Reason` is null. If the call ends due to an error the `Reason` is non-null.
+             */
             override fun onCallEnd(reason: Reason?) {
                 message.postValue(reason?.toString() ?: "CALL ENDED")
                 listener.onCallEnd(reason)
             }
 
+            /**
+             * The call is reconnecting and currently unavailable
+             * Will provide {@link Reason} for more information about what failure occurred.
+             */
             override fun onReconnecting(reason: Reason) {
                 listener.onReconnecting(reason)
             }
