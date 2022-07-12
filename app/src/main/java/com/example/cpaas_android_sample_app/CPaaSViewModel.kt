@@ -28,11 +28,11 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
         val settings = CPaaSAPISettings(
             customDomain = "webrtc-dev.restcomm.com",
             accountSid = ACCOUNT_SID,
-            accountToken = AUTH_TOKEN,
+            authToken = AUTH_TOKEN,
             appSid = "ClickToCallDevApp",
             clientId = "YOUR_USER_ID",
             PNSToken = "PNSTOKEN",
-            BaseURL = Const.HTTP_URL_AWS)
+            baseURL = Const.HTTP_URL_AWS)
         Log.d("CPAASAPI", "$settings")
 
         // API initialization, must be called first and once in order to use this API.
@@ -46,7 +46,7 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
                     // feature use CPaaSAPI.video
                     CPaaSAPI.voice
                 }
-                api.connect(callId, CallOptions(audio = true, CallOptionService.P2A)) { result ->
+                api.connect(callId, CallOptions(audio = true)) { result ->
                     result.onSuccess { ICall ->
                         currentCall = ICall
 
@@ -76,7 +76,7 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
             createResult.onSuccess { callId ->
                 // got callId
                 CPaaSAPI.voice.connect(callId = callId,
-                                callOptions = CallOptions(audio = true, CallOptionService.P2A))
+                                callOptions = CallOptions(audio = true))
                 { connectCallResult ->
                     connectCallResult.onSuccess { call ->
                         // call created
