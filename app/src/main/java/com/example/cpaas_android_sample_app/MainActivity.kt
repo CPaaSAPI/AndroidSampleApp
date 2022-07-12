@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onStartCallPressed() {
-        cPaaSModel.onStartCallPressed("DESTINATION_ID")
+        cPaaSModel.onStartCallPressed()
         goToCallView()
     }
 

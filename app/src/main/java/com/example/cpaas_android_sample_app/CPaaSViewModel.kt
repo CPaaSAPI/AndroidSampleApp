@@ -13,7 +13,7 @@ import com.cpaasapi.sdk.utils.Const
 
 /**
  * A View Model that demonstrate the usage of CPaaS API calls
- * (such as CPaaSAPI.register(), CPaaSAPI.startCall(), call.eventListener, etc...)
+ * (such as CPaaSAPI.register(), CPaaSAPI.voice.create(), CPaaSAPI.voice.connect, etc...)
  */
 class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
     val message = MutableLiveData<String>()
@@ -68,14 +68,18 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
         })
     }
 
-    fun onStartCallPressed(destId: String) {
-        // Start a call to destId. creates and returns a new call object that represents this call.
+    fun onStartCallPressed() {
+        // Initialization of call by steps:
+        // - voice.create Generate 'callId' and prepare CPaaS SDK to call;
+        // - voice.connect Connect caller to created call by 'callId'.
         CPaaSAPI.voice.create { createResult ->
             createResult.onSuccess { callId ->
+                // got callId
                 CPaaSAPI.voice.connect(callId = callId,
                                 callOptions = CallOptions(audio = true, CallOptionService.P2A))
                 { connectCallResult ->
                     connectCallResult.onSuccess { call ->
+                        // call created
                         currentCall = call
                     }
 

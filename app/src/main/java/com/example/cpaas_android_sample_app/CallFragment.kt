@@ -60,9 +60,12 @@ class CallFragment : Fragment() {
     }
 
     private fun setView(view: View) {
+        // Call status TextView will show statuses such as 'connecting', 'ringing', 'connected'
         callStatus = view.findViewById(R.id.call_status)
+        // Call progress bar showed until initializing the call
         callProgressBar = view.findViewById(R.id.call_progress)
 
+        // Mute/UnMute button enable/disable microphone on local side
         view.findViewById<ImageView>(R.id.mute_btn).setOnClickListener {
             mute = !mute
             var image = R.drawable.ic_mic
@@ -73,6 +76,7 @@ class CallFragment : Fragment() {
             cPaaSModel.onMutePressed(mute)
         }
 
+        // End call button will end call & close call fragment
         view.findViewById<ImageView>(R.id.end_btn).setOnClickListener {
             cPaaSModel.onEndPressed()
         }
