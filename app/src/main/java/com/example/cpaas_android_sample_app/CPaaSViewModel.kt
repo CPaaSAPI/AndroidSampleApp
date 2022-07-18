@@ -23,6 +23,8 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
     private val ACCOUNT_SID = "<Account SID from restcomm>"
     private val AUTH_TOKEN = "<Auth Token from restcomm>"
 
+
+
     fun onRegisterToCpaasPressed(callback: CPaaSAPICb) {
         val settings = CPaaSAPISettings(
             customDomain = "webrtc-dev.restcomm.com",
