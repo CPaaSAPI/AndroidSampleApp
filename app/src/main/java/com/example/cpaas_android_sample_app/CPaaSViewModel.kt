@@ -23,6 +23,8 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
     private val ACCOUNT_SID = "<Account SID from restcomm>"
     private val AUTH_TOKEN = "<Auth Token from restcomm>"
 
+
+
     fun onRegisterToCpaasPressed(callback: CPaaSAPICb) {
         val settings = CPaaSAPISettings(
             customDomain = "webrtc-dev.restcomm.com",
@@ -42,7 +44,8 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
                 handleIncomingCall(callId, callerId, serviceType, callback)
             }
 
-            override fun onRegistrationComplete(success: Boolean) {
+            override fun onRegistrationState(state: REGISTRATION_STATE) {
+                val success = state == REGISTRATION_STATE.REGISTERED
                 // API initialization was completed successfully
                 message.postValue("RegistrationComplete: $success")
             }
