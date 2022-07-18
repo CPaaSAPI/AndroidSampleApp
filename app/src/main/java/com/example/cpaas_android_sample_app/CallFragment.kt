@@ -9,8 +9,8 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import com.cpaasapi.sdk.api.ICallEvents
-import com.cpaasapi.sdk.api.Reason
+import com.cpaasapi.sdk.api.CPaaSCallEvents
+import com.cpaasapi.sdk.api.CPaaSReason
 
 /**
  * This Fragment is responsible for the view during an active call
@@ -38,7 +38,7 @@ class CallFragment : Fragment() {
     private fun registerViewModel() {
         cPaaSModel = ViewModelProvider(requireActivity()).get(CPaaSViewModel::class.java)
         // Listen to call event so we can update UI accordingly
-        cPaaSModel.startCallEventListener(object: ICallEvents {
+        cPaaSModel.startCallEventListener(object: CPaaSCallEvents {
             override fun onConnected() {
                 activity?.runOnUiThread {
                     callProgressBar?.visibility = View.GONE
@@ -51,7 +51,7 @@ class CallFragment : Fragment() {
                 }
             }
 
-            override fun onCallEnd(reason: Reason?) {
+            override fun onCallEnd(reason: CPaaSReason) {
                 activity?.runOnUiThread {
                     activity!!.onBackPressed()
                 }

@@ -16,7 +16,7 @@ import com.cpaasapi.sdk.utils.Const
  */
 class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
     val message = MutableLiveData<String>()
-    var currentCall: ICall? = null
+    var currentCall: CPaaSCall? = null
 
     // To get ACCOUNT_SID & AUTH_TOKEN please visit this link:
     // https://usstaging.restcomm.com/docs/api/overview.html#_authentication
@@ -106,9 +106,9 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun startCallEventListener(listener: ICallEvents) {
+    fun startCallEventListener(listener: CPaaSCallEvents) {
         // Listen to Call events
-        currentCall?.eventListener = object: ICallEvents {
+        currentCall?.eventListener = object: CPaaSCallEvents {
             /**
              * The call was successfully connected,
              * or the process of reconnecting was completed successfully.
@@ -128,7 +128,7 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
              * The call failed to connect.
              * Will provide {@link Reason} for more information about what failure occurred.
              */
-            override fun onConnectedFailure(reason: Reason) {
+            override fun onConnectedFailure(reason: CPaaSReason) {
                 message.postValue(reason.toString())
                 listener.onConnectedFailure(reason)
             }
@@ -141,8 +141,8 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
              *
              * If the call ends normally `Reason` is null. If the call ends due to an error the `Reason` is non-null.
              */
-            override fun onCallEnd(reason: Reason?) {
-                message.postValue(reason?.toString() ?: "CALL ENDED")
+            override fun onCallEnd(reason: CPaaSReason) {
+                message.postValue(reason.toString())
                 listener.onCallEnd(reason)
             }
 
@@ -150,7 +150,7 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
              * The call is reconnecting and currently unavailable
              * Will provide {@link Reason} for more information about what failure occurred.
              */
-            override fun onReconnecting(reason: Reason) {
+            override fun onReconnecting(reason: CPaaSReason) {
                 listener.onReconnecting(reason)
             }
         }
