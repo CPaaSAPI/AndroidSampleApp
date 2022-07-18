@@ -44,7 +44,8 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
                 handleIncomingCall(callId, callerId, serviceType, callback)
             }
 
-            override fun onRegistrationComplete(success: Boolean) {
+            override fun onRegistrationState(state: REGISTRATION_STATE) {
+                val success = state == REGISTRATION_STATE.REGISTERED
                 // API initialization was completed successfully
                 message.postValue("RegistrationComplete: $success")
             }

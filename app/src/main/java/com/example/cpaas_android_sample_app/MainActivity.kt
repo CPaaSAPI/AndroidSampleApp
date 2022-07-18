@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.cpaasapi.sdk.api.CPaaSAPICb
+import com.cpaasapi.sdk.api.REGISTRATION_STATE
 import com.cpaasapi.sdk.data.ServiceType
 
 /**
@@ -63,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                 goToCallView()
             }
 
-            override fun onRegistrationComplete(success: Boolean) {
+            override fun onRegistrationState(state: REGISTRATION_STATE) {
                 //Register complete
             }
         })
