@@ -9,8 +9,8 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import com.cpaasapi.sdk.api.CPaaSCallEvents
-import com.cpaasapi.sdk.api.CPaaSReason
+import com.cpaasapi.sdk.api.voice.CPaaSCallEvents
+import com.cpaasapi.sdk.api.voice.CPaaSReason
 
 /**
  * This Fragment is responsible for the view during an active call
