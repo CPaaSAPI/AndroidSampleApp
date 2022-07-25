@@ -5,6 +5,9 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.cpaasapi.sdk.api.*
+import com.cpaasapi.sdk.api.voice.CPaaSCall
+import com.cpaasapi.sdk.api.voice.CPaaSCallEvents
+import com.cpaasapi.sdk.api.voice.CPaaSReason
 import com.cpaasapi.sdk.data.CPaaSAPISettings
 import com.cpaasapi.sdk.data.CallOptions
 import com.cpaasapi.sdk.data.ServiceType
