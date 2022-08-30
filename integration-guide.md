@@ -16,7 +16,7 @@ The CPaaSAPI SDK exposes voice services that allow you to have a call with a CPa
 
 
 ### Platform Prerequisites
-1. Support for Android API level 21 or higher
+1. Support for Android API level 24 or higher
 2. Support for Java 11
 
 ## CPaaS API SDK Sample application
@@ -52,7 +52,7 @@ TODO write here about dependency kotlin and permission after DEMOAPP
 
 To start using the SDK you should register the SDK by using the `CPaaSAPI.register()` method using the parameters below.
 
-💡 Note: 
+💡 Note:
 * This should be done once in a session
 * We recommend to do it as soon as you open the application, it will save you time on the call connection.
 
@@ -73,7 +73,7 @@ To start using the SDK you should register the SDK by using the `CPaaSAPI.regist
                     // todo Listening to incoming calls. connect/reject a call with the given callId
                 }
 
-                override fun onRegistrationComplete(success: Boolean) {
+                override fun onRegistrationState(state: REGISTRATION_STATE) {
                     // todo you can start your call here 
                 }
             }
@@ -100,8 +100,8 @@ To initiate a call simply call **CPaaSAPI.voice.create(...)** and **CPaaSAPI.voi
 ```kotlin
     CPaaSAPI.voice.create { createResult ->
         createResult.onSuccess { callId ->
-            CPaaSAPI.voice.connect(callId, callOptions) { result ->
-                result.onSuccess {  call ->
+            CPaaSAPI.voice.connect(callId, callOptions) { connectResult ->
+                connectResult.onSuccess {  call ->
                     currentCall = call
                     // Here you can: 
                     // show call UI
@@ -118,9 +118,9 @@ To initiate a call simply call **CPaaSAPI.voice.create(...)** and **CPaaSAPI.voi
 
 
 ```kotlin
-call.mute() //mute the current call
-call.unmute() //unmute the current call
-call.end() //end current call
+call.mute() // mute the current call
+call.unmute() // unmute the current call
+call.end() // end current call
 ```
 
 ##  Answering an Incoming Call
@@ -154,7 +154,7 @@ call.eventListener = object: CPaaSCallEvents {
         // connection failed, check reason
     }
 
-    override fun onCallEnd(reason: CPaaSReason?) {
+    override fun onCallEnd(reason: CPaaSReason) {
         // call end, you can remove call UI
     }
 
