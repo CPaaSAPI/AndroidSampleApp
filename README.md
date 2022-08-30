@@ -1,9 +1,8 @@
 # AndroidSampleApp
 Sample code that demonstrate how to integrate the CPaaSAPI SDK to a kotlin application
 
-## CPaaS Android SDK Integration Guide
 
-# Getting Started
+# Integration Guide - Getting Started
 
 
 This guide provides you with an overview of the key objects you will use to build your Voice application using the CPaaSAPI SDK.
