@@ -47,7 +47,6 @@ Please add the following permissions to ``AndroidManifest.xml``
 ## API document for the Voice service SDK
 [API Document for the Voice Service](voice-api.md)
 
-To start 
 
 ## Initializing the SDK
 
