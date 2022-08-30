@@ -18,7 +18,7 @@ The CPaaSAPI SDK exposes voice services that allow you to have a call with a CPa
 
 
 ### Platform Prerequisites
-1. Support for Android API level 21 or higher
+1. Support for Android API level 24 or higher
 2. Support for Java 11
 
 ## Getting the CPaaS API SDK
@@ -73,7 +73,7 @@ To start using the SDK you should register the SDK by using the `CPaaSAPI.regist
                     // todo Listening to incoming calls. connect/reject a call with the given callId
                 }
 
-                override fun onRegistrationComplete(success: Boolean) {
+                override fun onRegistrationState(state: REGISTRATION_STATE) {
                     // todo you can start your call here 
                 }
             }
@@ -100,8 +100,8 @@ To initiate a call simply call **CPaaSAPI.voice.create(...)** and **CPaaSAPI.voi
 ```kotlin
     CPaaSAPI.voice.create { createResult ->
         createResult.onSuccess { callId ->
-            CPaaSAPI.voice.connect(callId, callOptions) { result ->
-                result.onSuccess {  call ->
+            CPaaSAPI.voice.connect(callId, callOptions) { connectResult ->
+                connectResult.onSuccess {  call ->
                     currentCall = call
                     // Here you can: 
                     // show call UI
@@ -154,7 +154,7 @@ call.eventListener = object: CPaaSCallEvents {
         // connection failed, check reason
     }
 
-    override fun onCallEnd(reason: CPaaSReason?) {
+    override fun onCallEnd(reason: CPaaSReason) {
         // call end, you can remove call UI
     }
 
