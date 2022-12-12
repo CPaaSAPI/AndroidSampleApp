@@ -33,7 +33,18 @@ The CPaaS API SDK is available for download in Maven Central.
 
 
 ```kotlin 
-implementation ("com.cpaasapi.sdk:1.0.0")
+repositories {
+    maven {
+    credentials  {
+        username = "CPaaSAPI"
+        password = "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" 
+    }
+  url = uri("https://maven.pkg.github.com/CPaaSAPI/cpaasapi/")
+}
+
+dependencies {
+  implementation("com.cpaasapi:cpaasapi-release:1.0.0")
+}
 ```
 
 ### Permission:

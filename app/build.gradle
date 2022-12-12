@@ -43,7 +43,7 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
     // when we will use sdk from repository we should check if all dependencies needed!
-    implementation fileTree(dir: "libs", include: ["*.aar"])
+    implementation("com.cpaasapi:cpaasapi-release:1.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
     implementation("org.webrtc:google-webrtc:1.0.32006")
     implementation("io.ktor:ktor-client-okhttp:1.6.5")
@@ -53,15 +53,3 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     implementation ("com.amplifyframework:aws-auth-cognito:1.35.3")
 }
-
-// Task will copy shared aar from project output to current project
-// change from when compiled path changed
-// change include when aar name changed
-task copyAAR(type: Copy) {
-    from("$projectDir/../../kmmclientsdk/shared/build/outputs/aar")
-    include('cpaasapi-debug.aar')
-    into("$projectDir/libs/")
-}
-
-// will copy aar before build.
-//preBuild.dependsOn copyAAR

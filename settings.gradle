@@ -11,7 +11,14 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         jcenter()
+        maven {
+            credentials  {
+                username = "CPaaSAPI"
+                password = "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"
+            }
+            url = uri("https://maven.pkg.github.com/CPaaSAPI/cpaasapi/")
     }
+}
 }
 rootProject.name = "cpaas-android-sample-app"
 include ':app'
