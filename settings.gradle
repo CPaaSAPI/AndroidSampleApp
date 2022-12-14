@@ -12,10 +12,10 @@ dependencyResolutionManagement {
         mavenCentral()
         jcenter()
         maven {
-            credentials  {
+        /*    credentials  {
                 username = "CPaaSAPI"
-                password = "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"
-            }
+                password = "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1"
+            }*/
             url = uri("https://maven.pkg.github.com/CPaaSAPI/cpaasapi/")
     }
 }
