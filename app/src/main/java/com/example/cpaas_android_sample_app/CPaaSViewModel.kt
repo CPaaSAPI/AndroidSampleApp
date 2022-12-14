@@ -36,7 +36,7 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
             appSid = "ClickToCallDevApp",
             clientId = "YOUR_USER_ID",
             PNSToken = "PNSTOKEN",
-            baseURL = Const.HTTP_URL_AWS)
+            baseURL = Const.HTTP_URL_AWS_DEV)
         Log.d("CPAASAPI", "$settings")
 
         // API initialization, must be called first and once in order to use this API.
@@ -67,7 +67,9 @@ class CPaaSViewModel(private val app: Application) : AndroidViewModel(app) {
             // feature use CPaaSAPI.video
             CPaaSAPI.voice
         }
-        api.connect(callId, CallOptions(audio = true)) { result ->
+        // destination is optional for P2A/A2P, but is mandatory for P2P use case, if given it shall be a valid string without special characters
+        val callOptions = CallOptions(audio = true, destination = "+1234567890")
+        api.connect(callId, callOptions) { result ->
             // Call accepted immediately
             // (You can add here UI dialog with accept / reject).
             result.onSuccess { ICall ->

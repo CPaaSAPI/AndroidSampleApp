@@ -43,7 +43,7 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
     // when we will use sdk from repository we should check if all dependencies needed!
-    implementation("com.cpaasapi:cpaasapi-release:1.0.0")
+    implementation("com.cpaasapi:cpaasapi-release:1.1.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
     implementation("org.webrtc:google-webrtc:1.0.32006")
     implementation("io.ktor:ktor-client-okhttp:1.6.5")
