@@ -37,13 +37,13 @@ repositories {
     maven {
     credentials  {
         username = "CPaaSAPI"
-        password = "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" 
+        password = "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" 
     }
   url = uri("https://maven.pkg.github.com/CPaaSAPI/cpaasapi/")
 }
 
 dependencies {
-  implementation("com.cpaasapi:cpaasapi-release:1.0.0")
+  implementation("com.cpaasapi:cpaasapi-release:1.1.1")
 }
 ```
 
