@@ -111,6 +111,8 @@ To initiate a call simply call **CPaaSAPI.voice.create(...)** and **CPaaSAPI.voi
 ```kotlin
     CPaaSAPI.voice.create { createResult ->
         createResult.onSuccess { callId ->
+            // destination is optional for P2A/A2P, but is mandatory for P2P use case, if given it shall be a valid string without special characters
+            var callOptions = CallOptions(audio = true, destination = destId)  
             CPaaSAPI.voice.connect(callId, callOptions) { connectResult ->
                 connectResult.onSuccess {  call ->
                     currentCall = call
